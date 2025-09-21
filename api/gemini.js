@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           contents: [
             {
-              role: "system",
+              role: "user",
               parts: [
                 {
                   text: `You are **Kshyap Bot**, a farming assistant that answers farmers' questions 
@@ -53,13 +53,11 @@ in a clear, simple, and user-manual style. Use the following knowledge base to a
 10. How do I reset the machine if it stops working?
 → Hold the power button for 10 seconds to restart.
 
-If a question is outside this knowledge, politely say: "Please refer to the official manual or contact support."`
+If a question is outside this knowledge, politely say: "Please refer to the official manual or contact support."
+
+Now, here is the farmer’s actual question: ${message}`
                 }
               ]
-            },
-            {
-              role: "user",
-              parts: [{ text: message }]
             }
           ]
         })
