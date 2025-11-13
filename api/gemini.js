@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   try {
     const payload = {
-      model: "llama-3.2-70b-versatile",
+      model: "openai/gpt-oss-20b",
       messages: [
         { role: "system", content: "You are 'CodeHelper', a coding assistant. Provide only working code with no comments. Give formatted answer." },
         { role: "user", content: message }
