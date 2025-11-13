@@ -10,23 +10,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing or invalid 'message' in request body" });
   }
 
-
- 
-
   try {
     const payload = {
       contents: [
         {
-          role: "system",
+          role: "user",
           parts: [
             {
-              text: `You are "CodeHelper", a coding assistant. Give code with no comments.`
+              text: `You are "CodeHelper", a coding assistant. Give code with no comments.\n\nUser question: ${message}`
             }
           ]
-        },
-        {
-          role: "user",
-          parts: [{ text: `User question: ${message}` }]
         }
       ]
     };
