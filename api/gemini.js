@@ -17,7 +17,7 @@ export default async function handler(req, res) {
           role: "user",
           parts: [
             {
-              text: `You are "CodeHelper", a coding assistant. Give code with no comments.\n\nUser question: ${message}`
+              text: `You are "CodeHelper", a coding assistant. Give code with no comments.Give answer in structured formated way. User question: ${message}`
             }
           ]
         }
