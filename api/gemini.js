@@ -10,10 +10,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing or invalid 'message' in request body" });
   }
 
-  const API_KEY = process.env.GOOGLE_API_KEY;
-  if (!API_KEY) {
-    return res.status(500).json({ error: "Missing GOOGLE_API_KEY" });
-  }
+
+ 
 
   try {
     const payload = {
@@ -33,9 +31,7 @@ export default async function handler(req, res) {
       ]
     };
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
-      {
+    const response = await fetch( "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + "AIzaSyBooQuwCLfTjrxrZSe9gCPcj558_8_9FP4", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
