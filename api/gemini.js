@@ -4,7 +4,10 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   const { message } = req.body;
   if (!message || typeof message !== "string") return res.status(400).json({ error: "Missing or invalid 'message' in request body" });
+
   const API_KEY = process.env.GROQ_API_KEY;
+  console.log("Groq key loaded:", API_KEY ? "Yes" : "No"); // 👈 Add this line here
+
   if (!API_KEY) return res.status(500).json({ error: "Missing GROQ_API_KEY" });
 
   try {
