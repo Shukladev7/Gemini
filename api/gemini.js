@@ -12,38 +12,39 @@ export default async function handler(req, res) {
 
   try {
     const payload = {
-      contents: [
+      model: "gpt-4o-mini", // you can also use "gpt-3.5-turbo" if 4o-mini not available
+      messages: [
+        {
+          role: "system",
+          content: "You are 'CodeHelper', a coding assistant. Give code with no comments. Give formatted answer."
+        },
         {
           role: "user",
-          parts: [
-            {
-              text: `You are "CodeHelper", a coding assistant. Give code with no comments.Give formatted answer. User question: ${message}`
-            }
-          ]
+          content: message
         }
-      ]
+      ],
+      temperature: 0.7,
     };
 
-    const response = await fetch( "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro:generateContent?key=" + "AIzaSyB5x68deltBLPbn6DU21PqOvpzmqmU3EWI", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      }
-    );
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + process.env.OPENAI_API_KEY, // store your key safely in env
+      },
+      body: JSON.stringify(payload),
+    });
 
     const data = await response.json();
 
     if (!response.ok) {
-      return res.status(500).json({ error: "Gemini API error", details: data });
+      return res.status(500).json({ error: "OpenAI API error", details: data });
     }
 
-    const reply =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      data?.output?.[0]?.content?.parts?.[0]?.text ||
-      null;
+    const reply = data?.choices?.[0]?.message?.content?.trim();
 
     if (!reply) {
-      return res.status(500).json({ error: "No reply from Gemini", details: data });
+      return res.status(500).json({ error: "No reply from OpenAI", details: data });
     }
 
     return res.status(200).json({ reply });
